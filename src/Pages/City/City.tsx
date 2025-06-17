@@ -57,7 +57,7 @@ export default function City() {
   }
   useEffect(() => {
     checkIsFav();
-  }, [forecastData , weatherData , geoLocationData]);
+  }, [forecastData, weatherData, geoLocationData]);
   if (weatherLoading || forecastLoading) {
     return <SkeletonLoader />;
   }
