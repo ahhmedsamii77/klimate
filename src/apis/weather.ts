@@ -48,7 +48,7 @@ export function getForecast(coords: CoordType) {
 
 export function searchCity(query: string) {
   const API_KEY = import.meta.env.VITE_OPEN_WEATHER_KEY;
-  return axios.get("http://api.openweathermap.org/geo/1.0/direct", {
+  return axios.get("https://api.openweathermap.org/geo/1.0/direct", {
     params: {
       appid: API_KEY,
       q: query,
