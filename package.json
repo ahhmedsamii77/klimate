@@ -2,7 +2,7 @@
   "name": "klimate",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://ahhmedsamii77.github.io/klimate",
+  "homepage": "https://ahhmedsamii77.github.io/klimate-react",
   "type": "module",
   "scripts": {
     "dev": "vite",
