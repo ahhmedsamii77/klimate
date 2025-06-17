@@ -20,7 +20,6 @@ export default function Dashboard() {
   const weatherData: CurrentWeatherType = weather?.data!;
   const geoLocationData: any = geoLocation?.data!;
   const forecastData = forecast?.data.list;
-  // const favCities: FavType[] = JSON.parse(localStorage.getItem('fav')!);
   const [favCities, setfavCities] = useState<FavType[]>(() => {
     const storedFav = localStorage.getItem('fav');
     return storedFav ? JSON.parse(storedFav) : [];
@@ -42,9 +41,9 @@ export default function Dashboard() {
   return (
     <div className='space-y-5'>
       <Helmet>Dashboard</Helmet>
-      {(!favCities || favCities.length != 0) && <h2 className='text-2xl font-bold tracking-tight'>Favorites</h2>}
+      {(!favCities || favCities?.length != 0) && <h2 className='text-2xl font-bold tracking-tight'>Favorites</h2>}
       <div className='flex items-center flex-wrap gap-3'>
-        {favCities.map(fav => <FavCities setfavCities={setfavCities} fav={fav} key={fav.id} />)}
+        {favCities?.map(fav => <FavCities setfavCities={setfavCities} fav={fav} key={fav.id} />)}
       </div>
       <div className='flex items-center justify-between'>
         <h2 className='text-2xl font-bold tracking-tight'>My Location</h2>

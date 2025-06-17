@@ -43,12 +43,12 @@ export default function WeatherDetails({ weatherData }: { weatherData: CurrentWe
           <CardTitle className="text-xl font-bold tracking-tighter">Weather Details</CardTitle>
         </CardHeader>
         <CardContent className="grid grid-cols-2 gap-4">
-          {details.map(detail => (
-            <div key={detail.color} className="flex items-center gap-3 border p-4 rounded-lg">
-              <detail.icon className={`w-5 h-5 ${detail.color}`} />
+          {details?.map(detail => (
+            <div key={detail?.color} className="flex items-center gap-3 border p-4 rounded-lg">
+              <detail.icon className={`w-5 h-5 ${detail?.color}`} />
               <div>
-                <p className="font-bold leading-none">{detail.description}</p>
-                <p className="text-muted-foreground text-sm">{detail.content}</p>
+                <p className="font-bold leading-none">{detail?.description}</p>
+                <p className="text-muted-foreground text-sm">{detail?.content}</p>
               </div>
             </div>
           ))}

@@ -48,7 +48,7 @@ export default function City() {
   }
   function checkIsFav() {
     const allfavs: FavType[] = JSON.parse(localStorage.getItem('fav')!);
-    const isExist = allfavs.find(city => city.id == `${name}${myCountry}`,);
+    const isExist = allfavs?.find(city => city.id == `${name}${myCountry}`,);
     if (isExist) {
       setIsFav(true);
     } else {

@@ -20,11 +20,11 @@ export default function WeatherGraph({ forecastData }: { forecastData: ListType[
         <div className="bg-background/90 rounded flex items-center gap-2 p-3">
           <div className="text-muted-foreground">
             <p className="font-bold text-sm">Temperature</p>
-            <p className="text-sm font-medium">{payload[0].value}°</p>
+            <p className="text-sm font-medium">{payload[0]?.value}°</p>
           </div>
           <div className="text-muted-foreground">
             <p className="font-bold text-sm">Feels Like</p>
-            <p className="text-sm font-medium">{payload[1].value}°</p>
+            <p className="text-sm font-medium">{payload[1]?.value}°</p>
           </div>
         </div>
       )

@@ -29,7 +29,7 @@ export default function Forecast({ list }: { list: ListType[] }) {
           <div key={idx} className="p-4 border rounded-lg flex items-center justify-between">
             <div>
               <p className="font-bold">{format(new Date(day.dt * 1000), 'EEE dd MMM')}</p>
-              <p className="text-sm text-muted-foreground">{day.weather[0].description}</p>
+              <p className="text-sm text-muted-foreground">{day?.weather[0].description}</p>
             </div>
             <div className="flex items-center gap-2">
               <div className="flex items-center gap-1 text-blue-500">

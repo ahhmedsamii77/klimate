@@ -48,8 +48,8 @@ export default function CurrentWeather({ weatherData, geoLocationData }: { weath
           </div>
         </div>
         <div className="text-center">
-          <img className="max-w-[200px]" src={`https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@4x.png`} alt={weatherData.weather[0].description} />
-          <p className="font-semibold">{weatherData.weather[0].description}</p>
+          <img className="max-w-[200px]" src={`https://openweathermap.org/img/wn/${weatherData?.weather[0].icon}@4x.png`} alt={weatherData.weather[0].description} />
+          <p className="font-semibold">{weatherData?.weather[0].description}</p>
         </div>
       </CardContent>
     </Card>
