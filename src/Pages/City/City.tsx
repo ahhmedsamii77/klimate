@@ -21,19 +21,13 @@ export default function City() {
   }!
   const { data: weather, isFetching: weatherLoading } = useGetCurrentWeather(coords);
   const { isFetching: forecastLoading, data: forecast } = useGetForecast(coords!);
-  const { data: geoLocation } = useReverseGeoLocation(coords);
+  const { data: geoLocation , isLoading: geoLocationLoading } = useReverseGeoLocation(coords);
   const { mutateAsync: addToFav } = useAddTofav();
   const forecastData = forecast?.data.list;
   const weatherData = weather?.data!;
   const geoLocationData: SearchCityType[] = geoLocation?.data ?? []
-  const [isFav, setIsFav] = useState<boolean>(false);
-  const cityData = geoLocationData?.[0];
-
-  if (!cityData) {
-    return <SkeletonLoader />;
-  }
-
-  const { name, country: myCountry, lat, lon, state } = cityData;
+  const [isFav, setIsFav] = useState<boolean>(false)
+  const { name, country: myCountry, lat, lon, state } = geoLocationData?.[0] ?? [];
   async function handleAddToFav() {
     const res = await addToFav({
       name: name,
@@ -64,7 +58,7 @@ export default function City() {
   useEffect(() => {
     checkIsFav();
   }, [forecastData, weatherData, geoLocationData]);
-  if (weatherLoading || forecastLoading) {
+  if (weatherLoading || forecastLoading || geoLocationLoading) {
     return <SkeletonLoader />;
   }
   return (
