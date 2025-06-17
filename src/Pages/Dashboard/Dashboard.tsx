@@ -52,7 +52,7 @@ export default function Dashboard() {
         </Button>
       </div>
       <div className='flex flex-col lg:flex-row  gap-6'>
-        <CurrentWeather geoLocationData={geoLocationData[0]} weatherData={weatherData} />
+        <CurrentWeather geoLocationData={geoLocationData?.[0]} weatherData={weatherData} />
         <WeatherGraph forecastData={forecastData} />
       </div>
       <div className="grid lg:grid-cols-2 gap-6">
