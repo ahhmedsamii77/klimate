@@ -17,7 +17,7 @@ export default function FavCities({ fav, setfavCities }: { fav: FavType, setfavC
       toast.success('city removed from favorites successfully.')
     }
   }
-  console.log(fav)
+  if (!fav?.name || !fav?.lat || !fav?.lon || !fav?.country) return null;
   return (
     <Link to={`city/${fav?.name}?lat=${fav?.lat}&lon=${fav?.lon}&country=${fav?.country}`} className="min-w-[200px]">
       <Card className="bg-background/60 relative w-full p-3 shadow">
