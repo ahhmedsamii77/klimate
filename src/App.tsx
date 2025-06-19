@@ -1,4 +1,4 @@
-import {  createBrowserRouter, RouterProvider } from 'react-router-dom';
+import {   createHashRouter, RouterProvider } from 'react-router-dom';
 import Layout from './components/template/Layout';
 import Dashboard from './Pages/Dashboard/Dashboard';
 import City from './Pages/City/City';
@@ -6,7 +6,7 @@ import { ThemeProvider } from './Context/theme-provider';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from './components/ui/sonner';
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: '', element: <Layout />, children: [
       {
