@@ -22,7 +22,7 @@ export function getCurrentWeather(coords: CoordType) {
 export function reverseGeoLocation(coords: CoordType) {
   const API_KEY = import.meta.env.VITE_OPEN_WEATHER_KEY;
   return axios.get<GeoLocationDataType[]>(
-    "http://api.openweathermap.org/geo/1.0/reverse",
+    "https://api.openweathermap.org/geo/1.0/reverse",
     {
       params: {
         appid: API_KEY,
