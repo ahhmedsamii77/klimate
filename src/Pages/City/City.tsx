@@ -29,15 +29,21 @@ export default function City() {
   const [isFav, setIsFav] = useState<boolean>(false)
   console.log(geoLocationData)
   async function handleAddToFav() {
+    if (geoLocationData.length === 0 || !weatherData) {
+      toast.error("City data not ready yet. Please try again.");
+      return;
+    }
+
+    const city = geoLocationData[0];
     const isAdded = await addToFav({
-      name: geoLocationData[0]?.name,
-      country: geoLocationData[0]?.country,
-      lat: geoLocationData[0]?.lat,
-      lon: geoLocationData[0]?.lon,
-      state: geoLocationData[0]?.state,
+      name: city.name,
+      country: city.country,
+      lat: city.lat,
+      lon: city.lon,
+      state: city.state,
       main: weatherData?.main,
       weather: weatherData?.weather,
-      id: `${geoLocationData[0]?.name}${geoLocationData[0]?.country}`,
+      id: `${city.name}${city.country}`,
     });
     setIsFav(isAdded);
     if (isAdded) {
@@ -47,6 +53,7 @@ export default function City() {
     toast.success('city removed from favorites successfully.')
   }
   function checkIsFav() {
+    if (geoLocationData.length === 0) return;
     const allfavs: FavType[] = JSON.parse(localStorage.getItem('fav')!);
     const isExist = allfavs?.find(city => city.id == `${geoLocationData[0]?.name}${geoLocationData[0]?.country}`,);
     if (isExist) {
