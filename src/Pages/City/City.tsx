@@ -27,84 +27,44 @@ export default function City() {
   const weatherData = weather?.data!;
   const geoLocationData: SearchCityType[] = geoLocation?.data ?? []
   const [isFav, setIsFav] = useState<boolean>(false)
-  const { name, country: myCountry, lat, lon, state } = geoLocationData?.[0] ?? [];
-  // async function handleAddToFav() {
-  //   const isAdded = await addToFav({
-  //     name: name,
-  //     country: myCountry!,
-  //     lat: lat,
-  //     lon: lon,
-  //     state: state,
-  //     main: weatherData.main,
-  //     weather: weatherData.weather,
-  //     id: `${name}${myCountry}`,
-  //   });
-  //   setIsFav(isAdded);
-  //   if (isAdded) {
-  //     toast.success('city added to favorites successfully.')
-  //     return;
-  //   }
-  //   toast.success('city removed from favorites successfully.')
-  // }
-  // function checkIsFav() {
-  //   const allfavs: FavType[] = JSON.parse(localStorage.getItem('fav')!);
-  //   if (!allfavs) {
-  //     setIsFav(false)
-  //   }
-  //   const isExist = allfavs?.find(city => city.id == `${name}${myCountry}`,);
-  //   if (isExist) {
-  //     setIsFav(true);
-  //   } else {
-  //     setIsFav(false);
-  //   }
-  // }
+  // const { name, country: myCountry, lat, lon, state } = geoLocationData?.[0] ?? [];
+  console.log(geoLocationData)
   async function handleAddToFav() {
-  if (!name || !myCountry || !weatherData) {
-    toast.error("City data is not ready yet. Please try again shortly.");
-    return;
+    const isAdded = await addToFav({
+      name: geoLocationData[0]?.name,
+      country: geoLocationData[0]?.country,
+      lat: geoLocationData[0]?.lat,
+      lon: geoLocationData[0]?.lon,
+      state: geoLocationData[0]?.state,
+      main: weatherData?.main,
+      weather: weatherData?.weather,
+      id: `${geoLocationData[0]?.name}${geoLocationData[0]?.country}`,
+    });
+    setIsFav(isAdded);
+    if (isAdded) {
+      toast.success('city added to favorites successfully.')
+      return;
+    }
+    toast.success('city removed from favorites successfully.')
   }
-
-  const isAdded = await addToFav({
-    name: name,
-    country: myCountry,
-    lat: lat,
-    lon: lon,
-    state: state,
-    main: weatherData.main,
-    weather: weatherData.weather,
-    id: `${name}${myCountry}`,
-  });
-
-  setIsFav(isAdded);
-
-  if (isAdded) {
-    toast.success("City added to favorites successfully.");
-  } else {
-    toast.success("City removed from favorites successfully.");
-  }
-}
-
   function checkIsFav() {
-  if (typeof window === 'undefined' || !name || !myCountry) {
-    setIsFav(false);
-    return;
+    const allfavs: FavType[] = JSON.parse(localStorage.getItem('fav')!);
+    if (!allfavs) {
+      setIsFav(false)
+    }
+    const isExist = allfavs?.find(city => city.id == `${geoLocationData[0]?.name}${geoLocationData[0]?.country}`,);
+    if (isExist) {
+      setIsFav(true);
+    } else {
+      setIsFav(false);
+    }
   }
-
-  const favRaw = localStorage.getItem('fav');
-  if (!favRaw) {
-    setIsFav(false);
-    return;
-  }
-
-  const allfavs: FavType[] = JSON.parse(favRaw);
-  const isExist = allfavs.find(city => city.id === `${name}${myCountry}`);
-  setIsFav(!!isExist);
-}
+  
   useEffect(() => {
-    if (name && myCountry) {
+    if (geoLocationData) {
       checkIsFav();
     }
-  }, [name, myCountry]);
+  }, [geoLocationData]);
   if (weatherLoading || forecastLoading || geoLocationLoading) {
     return <SkeletonLoader />;
   }
