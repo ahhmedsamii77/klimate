@@ -49,9 +49,6 @@ export default function City() {
   }
   function checkIsFav() {
     const allfavs: FavType[] = JSON.parse(localStorage.getItem('fav')!);
-    if (!allfavs) {
-      setIsFav(false)
-    }
     const isExist = allfavs?.find(city => city.id == `${geoLocationData[0]?.name}${geoLocationData[0]?.country}`,);
     if (isExist) {
       setIsFav(true);
