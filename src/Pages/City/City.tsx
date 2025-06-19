@@ -28,24 +28,24 @@ export default function City() {
   const geoLocationData: SearchCityType[] = geoLocation?.data ?? []
   const [isFav, setIsFav] = useState<boolean>(false)
   const { name, country: myCountry, lat, lon, state } = geoLocationData?.[0] ?? [];
-  async function handleAddToFav() {
-    const isAdded = await addToFav({
-      name: name,
-      country: myCountry!,
-      lat: lat,
-      lon: lon,
-      state: state,
-      main: weatherData.main,
-      weather: weatherData.weather,
-      id: `${name}${myCountry}`,
-    });
-    setIsFav(isAdded);
-    if (isAdded) {
-      toast.success('city added to favorites successfully.')
-      return;
-    }
-    toast.success('city removed from favorites successfully.')
-  }
+  // async function handleAddToFav() {
+  //   const isAdded = await addToFav({
+  //     name: name,
+  //     country: myCountry!,
+  //     lat: lat,
+  //     lon: lon,
+  //     state: state,
+  //     main: weatherData.main,
+  //     weather: weatherData.weather,
+  //     id: `${name}${myCountry}`,
+  //   });
+  //   setIsFav(isAdded);
+  //   if (isAdded) {
+  //     toast.success('city added to favorites successfully.')
+  //     return;
+  //   }
+  //   toast.success('city removed from favorites successfully.')
+  // }
   // function checkIsFav() {
   //   const allfavs: FavType[] = JSON.parse(localStorage.getItem('fav')!);
   //   if (!allfavs) {
@@ -58,6 +58,32 @@ export default function City() {
   //     setIsFav(false);
   //   }
   // }
+  async function handleAddToFav() {
+  if (!name || !myCountry || !weatherData) {
+    toast.error("City data is not ready yet. Please try again shortly.");
+    return;
+  }
+
+  const isAdded = await addToFav({
+    name: name,
+    country: myCountry,
+    lat: lat,
+    lon: lon,
+    state: state,
+    main: weatherData.main,
+    weather: weatherData.weather,
+    id: `${name}${myCountry}`,
+  });
+
+  setIsFav(isAdded);
+
+  if (isAdded) {
+    toast.success("City added to favorites successfully.");
+  } else {
+    toast.success("City removed from favorites successfully.");
+  }
+}
+
   function checkIsFav() {
   if (typeof window === 'undefined' || !name || !myCountry) {
     setIsFav(false);
