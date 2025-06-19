@@ -46,23 +46,39 @@ export default function City() {
     }
     toast.success('city removed from favorites successfully.')
   }
+  // function checkIsFav() {
+  //   const allfavs: FavType[] = JSON.parse(localStorage.getItem('fav')!);
+  //   if (!allfavs) {
+  //     setIsFav(false)
+  //   }
+  //   const isExist = allfavs?.find(city => city.id == `${name}${myCountry}`,);
+  //   if (isExist) {
+  //     setIsFav(true);
+  //   } else {
+  //     setIsFav(false);
+  //   }
+  // }
   function checkIsFav() {
-    const allfavs: FavType[] = JSON.parse(localStorage.getItem('fav')!);
-    if (!allfavs) {
-      setIsFav(false)
-    }
-    const isExist = allfavs?.find(city => city.id == `${name}${myCountry}`,);
-    if (isExist) {
-      setIsFav(true);
-    } else {
-      setIsFav(false);
-    }
+  if (typeof window === 'undefined' || !name || !myCountry) {
+    setIsFav(false);
+    return;
   }
+
+  const favRaw = localStorage.getItem('fav');
+  if (!favRaw) {
+    setIsFav(false);
+    return;
+  }
+
+  const allfavs: FavType[] = JSON.parse(favRaw);
+  const isExist = allfavs.find(city => city.id === `${name}${myCountry}`);
+  setIsFav(!!isExist);
+}
   useEffect(() => {
     if (name && myCountry) {
       checkIsFav();
     }
-  }, [name, country]);
+  }, [name, myCountry]);
   if (weatherLoading || forecastLoading || geoLocationLoading) {
     return <SkeletonLoader />;
   }
