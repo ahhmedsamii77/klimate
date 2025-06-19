@@ -21,7 +21,7 @@ export default function City() {
   }!
   const { data: weather, isFetching: weatherLoading } = useGetCurrentWeather(coords);
   const { isFetching: forecastLoading, data: forecast } = useGetForecast(coords!);
-  const { data: geoLocation , isLoading: geoLocationLoading } = useReverseGeoLocation(coords);
+  const { data: geoLocation, isLoading: geoLocationLoading } = useReverseGeoLocation(coords);
   const { mutateAsync: addToFav } = useAddTofav();
   const forecastData = forecast?.data.list;
   const weatherData = weather?.data!;
@@ -29,7 +29,7 @@ export default function City() {
   const [isFav, setIsFav] = useState<boolean>(false)
   const { name, country: myCountry, lat, lon, state } = geoLocationData?.[0] ?? [];
   async function handleAddToFav() {
-    const res = await addToFav({
+    const isAdded = await addToFav({
       name: name,
       country: myCountry!,
       lat: lat,
@@ -39,8 +39,8 @@ export default function City() {
       weather: weatherData.weather,
       id: `${name}${myCountry}`,
     });
-    setIsFav(res);
-    if (res) {
+    setIsFav(isAdded);
+    if (isAdded) {
       toast.success('city added to favorites successfully.')
       return;
     }
@@ -48,6 +48,9 @@ export default function City() {
   }
   function checkIsFav() {
     const allfavs: FavType[] = JSON.parse(localStorage.getItem('fav')!);
+    if (!allfavs) {
+      setIsFav(false)
+    }
     const isExist = allfavs?.find(city => city.id == `${name}${myCountry}`,);
     if (isExist) {
       setIsFav(true);
@@ -66,7 +69,7 @@ export default function City() {
       <div className="flex items-center justify-between">
         <h1 className="font-bold  text-3xl tracking-tight">{cityName}, {country}</h1>
         <Button onClick={handleAddToFav} className={` ${isFav ? 'bg-yellow-500!' : 'bg-background/60! '} cursor-pointer`} variant={'outline'}>
-          <Star className={`w-5! h-5! fill-current ${isFav ? 'text-black!' : 'text-white'!}`} />
+          <Star className={`w-5! h-5! fill-current ${isFav ? 'text-black!' : 'text-white!'}`} />
         </Button>
       </div>
       <div className="space-y-4">
