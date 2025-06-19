@@ -47,7 +47,6 @@ export default function City() {
     toast.success('city removed from favorites successfully.')
   }
   function checkIsFav() {
-    if (geoLocationData.length === 0) return;
     const allfavs: FavType[] = JSON.parse(localStorage.getItem('fav')!);
     const isExist = allfavs?.find(city => city.id == `${geoLocationData[0]?.name}${geoLocationData[0]?.country}`,);
     if (isExist) {
@@ -58,7 +57,7 @@ export default function City() {
   }
 
   useEffect(() => {
-    if (geoLocationData.length > 0) {
+    if (geoLocationData?.length > 0) {
       checkIsFav();
     }
   }, [geoLocationData]);
