@@ -25,15 +25,9 @@ export default function City() {
   const { mutateAsync: addToFav } = useAddTofav();
   const forecastData = forecast?.data.list;
   const weatherData = weather?.data!;
-  const geoLocationData: SearchCityType[] = geoLocation?.data ?? []
+  const geoLocationData: SearchCityType[] = geoLocation?.data!
   const [isFav, setIsFav] = useState<boolean>(false)
-  console.log(geoLocationData)
   async function handleAddToFav() {
-    if (geoLocationData.length === 0 || !weatherData) {
-      toast.error("City data not ready yet. Please try again.");
-      return;
-    }
-
     const city = geoLocationData[0];
     const isAdded = await addToFav({
       name: city.name,
