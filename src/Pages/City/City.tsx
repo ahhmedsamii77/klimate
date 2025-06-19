@@ -62,7 +62,7 @@ export default function City() {
     if (name && myCountry) {
       checkIsFav();
     }
-  }, [forecastData, weatherData, geoLocationData]);
+  }, [name, country]);
   if (weatherLoading || forecastLoading || geoLocationLoading) {
     return <SkeletonLoader />;
   }
