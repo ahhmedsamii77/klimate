@@ -26,9 +26,11 @@ export default function City() {
   const forecastData = forecast?.data.list;
   const weatherData = weather?.data!;
   const geoLocationData: SearchCityType[] = geoLocation?.data!
+  console.log(geoLocationData)
   const [isFav, setIsFav] = useState<boolean>(false)
   async function handleAddToFav() {
     const city = geoLocationData[0];
+    console.log(city)
     const isAdded = await addToFav({
       name: city.name,
       country: city.country,
@@ -61,7 +63,7 @@ export default function City() {
       checkIsFav();
     }
   }, [geoLocationData]);
-  if (weatherLoading || forecastLoading || geoLocationLoading) {
+  if (weatherLoading || forecastLoading || geoLocationLoading || !geoLocation) {
     return <SkeletonLoader />;
   }
   return (
