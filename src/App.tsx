@@ -1,4 +1,4 @@
-import {   createHashRouter, RouterProvider } from 'react-router-dom';
+import {  createHashRouter, RouterProvider } from 'react-router-dom';
 import Layout from './components/template/Layout';
 import Dashboard from './Pages/Dashboard/Dashboard';
 import City from './Pages/City/City';
