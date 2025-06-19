@@ -27,7 +27,6 @@ export default function City() {
   const weatherData = weather?.data!;
   const geoLocationData: SearchCityType[] = geoLocation?.data ?? []
   const [isFav, setIsFav] = useState<boolean>(false)
-  // const { name, country: myCountry, lat, lon, state } = geoLocationData?.[0] ?? [];
   console.log(geoLocationData)
   async function handleAddToFav() {
     const isAdded = await addToFav({
@@ -56,9 +55,9 @@ export default function City() {
       setIsFav(false);
     }
   }
-  
+
   useEffect(() => {
-    if (geoLocationData) {
+    if (geoLocationData.length > 0) {
       checkIsFav();
     }
   }, [geoLocationData]);
