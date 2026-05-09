@@ -12,6 +12,7 @@ import { CurrentWeatherType, FavType } from '@/types/wather.types'
 import { RefreshCw } from 'lucide-react'
 import { useState } from 'react'
 import { Helmet } from 'react-helmet'
+
 export default function Dashboard() {
   const { error, isLoading, coords, getCoords } = useGetCoords();
   const { isFetching: CurrentWeatherFetching, data: weather, refetch: weatherRefetch } = useGetCurrentWeather(coords!);
@@ -23,8 +24,9 @@ export default function Dashboard() {
   const [favCities, setfavCities] = useState<FavType[]>(() => {
     const storedFav = localStorage.getItem('fav');
     return storedFav ? JSON.parse(storedFav) : [];
-  })
-  function handleRefersh() {
+  });
+
+  function handleRefresh() {
     getCoords();
     if (coords) {
       weatherRefetch();
@@ -32,33 +34,49 @@ export default function Dashboard() {
       forecastRefetch();
     }
   }
+
   if (isLoading || CurrentWeatherFetching || geoLocationFetching || forecastFetch) {
     return <SkeletonLoader />;
   }
   if (error) {
-    return <ErrorWeatherData getCoords={getCoords} error={error} />
+    return <ErrorWeatherData getCoords={getCoords} error={error} />;
   }
+
   return (
-    <div className='space-y-5'>
-      <Helmet>Dashboard</Helmet>
-      {(!favCities || favCities?.length != 0) && <h2 className='text-2xl font-bold tracking-tight'>Favorites</h2>}
-      <div className='flex items-center flex-wrap gap-3'>
-        {favCities?.map(fav => <FavCities setfavCities={setfavCities} fav={fav} key={fav.id} />)}
-      </div>
+    <div className='space-y-6'>
+      <Helmet><title>Klimate – Dashboard</title></Helmet>
+
+      {/* Favorites Section – only shown when there are saved cities */}
+      {favCities.length > 0 && (
+        <>
+          <h2 className='text-2xl font-bold tracking-tight'>Favorites</h2>
+          <div className='flex items-center flex-wrap gap-3'>
+            {favCities.map(fav => (
+              <FavCities setfavCities={setfavCities} fav={fav} key={fav.id} />
+            ))}
+          </div>
+        </>
+      )}
+
+      {/* My Location Header */}
       <div className='flex items-center justify-between'>
         <h2 className='text-2xl font-bold tracking-tight'>My Location</h2>
-        <Button onClick={handleRefersh} variant={'outline'} className='cursor-pointer bg-background/60!'>
-          <RefreshCw className='w-6 h-6' />
+        <Button onClick={handleRefresh} variant={'outline'} size='icon' className='cursor-pointer bg-background/60!'>
+          <RefreshCw className='w-4 h-4' />
         </Button>
       </div>
-      <div className='flex flex-col lg:flex-row  gap-6'>
+
+      {/* Main Weather Cards */}
+      <div className='flex flex-col lg:flex-row gap-6'>
         <CurrentWeather geoLocationData={geoLocationData?.[0]} weatherData={weatherData} />
         <WeatherGraph forecastData={forecastData} />
       </div>
-      <div className="grid lg:grid-cols-2 gap-6">
+
+      {/* Details + Forecast */}
+      <div className='grid lg:grid-cols-2 gap-6'>
         <WeatherDetails weatherData={weatherData} />
         <Forecast list={forecastData} />
       </div>
     </div>
-  )
+  );
 }

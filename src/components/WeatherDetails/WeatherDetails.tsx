@@ -8,7 +8,7 @@ export default function WeatherDetails({ weatherData }: { weatherData: CurrentWe
     const directions = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
     const index = Math.floor((degree + 22.5) / 45) % 8;
     const dir = directions[index];
-    return `${dir}(${index}°)`;
+    return `${dir} (${degree}°)`;
   }
   const details = [
     {
@@ -37,7 +37,7 @@ export default function WeatherDetails({ weatherData }: { weatherData: CurrentWe
     },
   ]
   return (
-    <div className="items-start">
+    <div className="h-full">
       <Card className="bg-background/60">
         <CardHeader>
           <CardTitle className="text-xl font-bold tracking-tighter">Weather Details</CardTitle>
